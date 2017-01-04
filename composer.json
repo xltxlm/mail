@@ -1,0 +1,28 @@
+{
+  "name": "xltxlm/mail",
+  "description": "项目介绍",
+  "authors": [
+    {
+      "name": "xltxlm",
+      "email": "xltxlm@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "swiftmailer/swiftmailer": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "xltxlm\\mail\\": [
+        "src/"
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "xltxlm\\mail\\": [
+        "./"
+      ]
+    }
+  }
+}
