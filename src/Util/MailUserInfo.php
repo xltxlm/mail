@@ -11,7 +11,7 @@ namespace xltxlm\mail\Util;
 /**
  * Class UserInfo.
  */
-final class MailUserInfo
+class MailUserInfo
 {
     /** @var string 邮箱地址 */
     protected $email = '';
