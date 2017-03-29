@@ -134,7 +134,7 @@ final class MailSmtp
         };
 
         // Give it a body
-        $message->setBody($this->getBody());
+        $message->setBody($this->getBody(), 'text/html');
         $mailer->send($message);
     }
 }
