@@ -120,14 +120,15 @@ final class MailSmtp
 
         // Create the message
         $message = Swift_Message::newInstance();
+        $mailUserInfos = $this->getTo();
+        $mailUserInfo = array_shift($mailUserInfos);
+        $message->setTo([$mailUserInfo->getEmail() => $mailUserInfo->getNickname()]);
         $message
             // Give the message a subject
             ->setSubject($this->getTitle())
             // Set the From address with an associative array
-            ->setFrom([$this->getMailConfig()->getUserName() => $this->getMailConfig()->getNickName()]);
-        $mailUserInfos = $this->getTo();
-        $mailUserInfo = array_shift($mailUserInfos);
-        $message->setTo([$mailUserInfo->getEmail() => $mailUserInfo->getNickname()]);
+            ->setFrom([$this->getMailConfig()->getUserName() => $mailUserInfo->getFromUserName() ?: $this->getMailConfig
+            ()->getNickName()]);
         foreach ($mailUserInfos as $to) {
             // Set the To addresses with an associative array
             $message->addCc($to->getEmail(), $to->getNickname());

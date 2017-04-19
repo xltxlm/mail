@@ -17,6 +17,26 @@ class MailUserInfo
     protected $email = '';
     /** @var string 显示名称 */
     protected $nickname = '';
+    /** @var string 发送邮件的账户,可以覆盖smtp的账户名称 */
+    protected $fromUserName = "";
+
+    /**
+     * @return string
+     */
+    public function getFromUserName(): string
+    {
+        return $this->fromUserName;
+    }
+
+    /**
+     * @param string $fromUserName
+     * @return MailUserInfo
+     */
+    public function setFromUserName(string $fromUserName): MailUserInfo
+    {
+        $this->fromUserName = $fromUserName;
+        return $this;
+    }
 
     /**
      * @return string
