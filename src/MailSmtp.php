@@ -113,7 +113,7 @@ final class MailSmtp
     public function __invoke()
     {
         // Create the Transport
-        $transport = Swift_SmtpTransport::newInstance($this->getMailConfig()->getHost(), $this->getMailConfig()->getPort())
+        $transport = Swift_SmtpTransport::newInstance($this->getMailConfig()->getHost(), $this->getMailConfig()->getPort(), $this->getMailConfig()->isSsl() ? 'ssl' : '')
             ->setUsername($this->getMailConfig()->getUserName())
             ->setPassword($this->getMailConfig()->getPassword());
         $mailer = Swift_Mailer::newInstance($transport);

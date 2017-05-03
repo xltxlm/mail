@@ -21,6 +21,27 @@ abstract class MailConfig
     /** @var string 密码 */
     protected $password = '';
     protected $port = '';
+    /** @var bool 是否采用加密端口发送邮件 */
+    protected $ssl = false;
+
+    /**
+     * @return bool
+     */
+    public function isSsl(): bool
+    {
+        return $this->ssl;
+    }
+
+    /**
+     * @param bool $ssl
+     * @return MailConfig
+     */
+    public function setSsl(bool $ssl): MailConfig
+    {
+        $this->ssl = $ssl;
+        return $this;
+    }
+
 
     /**
      * @return string
