@@ -8,6 +8,7 @@
 
 namespace xltxlm\mail;
 
+use xltxlm\logger\Operation\Action\MailLog;
 use xltxlm\mail\Config\MailConfig;
 use Swift_Mailer;
 use Swift_Message;
@@ -112,6 +113,7 @@ final class MailSmtp
      */
     public function __invoke()
     {
+        $start = microtime(true);
         // Create the Transport
         $transport = (new Swift_SmtpTransport($this->getMailConfig()->getHost(), $this->getMailConfig()->getPort(), $this->getMailConfig()->isSsl() ? 'ssl' : ''))
             ->setUsername($this->getMailConfig()->getUserName())
@@ -137,5 +139,7 @@ final class MailSmtp
         // Give it a body
         $message->setBody($this->getBody(), 'text/html');
         $mailer->send($message);
+        $time = sprintf('%.4f', microtime(true) - $start);
+        (new MailLog)->setRunTime($time)();
     }
 }
