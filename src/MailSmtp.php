@@ -27,6 +27,49 @@ final class MailSmtp
     protected $body = '';
     /** @var MailUserInfo[] */
     protected $to = [];
+    /** @var MailUserInfo[] 抄送的人 */
+    protected $cc = [];
+
+    /** @var string 指定的回复人 */
+    protected $ReplyTo = "";
+
+    /**
+     * @return MailUserInfo[]
+     */
+    public function getCc(): array
+    {
+        return $this->cc;
+    }
+
+    /**
+     * @param MailUserInfo[] $cc
+     * @return MailSmtp
+     */
+    public function setCc(array $cc): MailSmtp
+    {
+        $this->cc = $cc;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getReplyTo(): string
+    {
+        return $this->ReplyTo;
+    }
+
+    /**
+     * @param string $ReplyTo
+     * @return MailSmtp
+     */
+    public function setReplyTo(string $ReplyTo): MailSmtp
+    {
+        $this->ReplyTo = $ReplyTo;
+        return $this;
+    }
+
 
     /**
      * @return MailConfig
@@ -115,7 +158,7 @@ final class MailSmtp
     {
         $start = microtime(true);
         // Create the Transport
-        $transport = (new Swift_SmtpTransport($this->getMailConfig()->getHost(), $this->getMailConfig()->getPort(), $this->getMailConfig()->isSsl() ? 'ssl' : ''))
+        $transport = (new Swift_SmtpTransport($this->getMailConfig()->getHost(), $this->getMailConfig()->getPort(), $this->getMailConfig()->isSsl() ? 'ssl' : ($this->getMailConfig()->isTls() ? 'tls' : '')))
             ->setUsername($this->getMailConfig()->getUserName())
             ->setPassword($this->getMailConfig()->getPassword());
         $mailer = new Swift_Mailer($transport);
@@ -135,7 +178,13 @@ final class MailSmtp
             // Set the To addresses with an associative array
             $message->addCc($to->getEmail(), $to->getNickname());
         };
-
+        foreach ($this->getCc() as $email=>$username) {
+            // Set the To addresses with an associative array
+            $message->addCc($email, $username);
+        };
+        if ($this->getReplyTo()) {
+            $message->setReplyTo($this->getReplyTo());
+        }
         // Give it a body
         $message->setBody($this->getBody(), 'text/html');
         $mailer->send($message);

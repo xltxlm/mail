@@ -23,6 +23,27 @@ abstract class MailConfig
     protected $port = '';
     /** @var bool 是否采用加密端口发送邮件 */
     protected $ssl = false;
+    /** @var bool 是否采用加密端口发送邮件 */
+    protected $tls = false;
+
+    /**
+     * @return bool
+     */
+    public function isTls(): bool
+    {
+        return $this->tls;
+    }
+
+    /**
+     * @param bool $tls
+     * @return MailConfig
+     */
+    public function setTls(bool $tls): MailConfig
+    {
+        $this->tls = $tls;
+        return $this;
+    }
+
 
     /**
      * @return bool

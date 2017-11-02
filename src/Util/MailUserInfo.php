@@ -20,6 +20,7 @@ class MailUserInfo
     /** @var string 发送邮件的账户,可以覆盖smtp的账户名称 */
     protected $fromUserName = "";
 
+
     /**
      * @return string
      */
